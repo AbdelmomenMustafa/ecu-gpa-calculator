@@ -4,7 +4,7 @@ const GRADE_MAP = {
   'F': 0, 'FL': 0, 'ABS': 0
 };
 
-const EXCLUDED_GRADES = ['F', 'FL', 'ABS'];
+const EXCLUDED_GRADES = ['I', 'CON', 'W'];
 
 const RETAKE_MAX_GRADE = 'B+';
 const RETAKE_MAX_POINTS = 3.2;
