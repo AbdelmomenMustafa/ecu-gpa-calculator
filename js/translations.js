@@ -183,6 +183,30 @@ const translations = {
         retakeContent: {
           rule: "If a student previously received F or FL in a course and is retaking it, the maximum grade they can achieve is B+ (3.2).",
           enforced: "This rule is enforced in both the calculator and the planner."
+        },
+        gradeDefinitions: "Grade Definitions",
+        gradeDefinitionsContent: {
+          intro: "Each grade code used at ECU has a specific meaning. Here is what each one represents:",
+          grades: [
+            { code: "A+", desc: "Excellent — 4.0 points per credit hour (96% and above)" },
+            { code: "A", desc: "Very Good — 3.7 points per credit hour (92% – less than 96%)" },
+            { code: "A-", desc: "Very Good minus — 3.4 points per credit hour (88% – less than 92%)" },
+            { code: "B+", desc: "Good — 3.2 points per credit hour (84% – less than 88%)" },
+            { code: "B", desc: "Good minus — 3.0 points per credit hour (80% – less than 84%)" },
+            { code: "B-", desc: "Above Average — 2.8 points per credit hour (76% – less than 80%)" },
+            { code: "C+", desc: "Average — 2.6 points per credit hour (72% – less than 76%)" },
+            { code: "C", desc: "Below Average — 2.4 points per credit hour (68% – less than 72%)" },
+            { code: "C-", desc: "Acceptable — 2.2 points per credit hour (64% – less than 68%)" },
+            { code: "D+", desc: "Marginal Pass — 2.0 points per credit hour (60% – less than 64%)" },
+            { code: "D", desc: "Weak Pass — 1.5 points per credit hour (55% – less than 60%)" },
+            { code: "D-", desc: "Minimum Pass — 1.0 points per credit hour (50% – less than 55%)" },
+            { code: "F", desc: "Failed — 0 points, but credit hours count in GPA. Student scored below 50% total." },
+            { code: "FL", desc: "Failed (Lab/Exam) — 0 points, credit hours count in GPA. Student scored 50%+ total but got less than 12/40 on the final exam." },
+            { code: "ABS", desc: "Absent — 0 points, credit hours count in GPA. Student was absent from the final exam." },
+            { code: "CON", desc: "Course Continued — Excluded from GPA. The course continues into the next semester (incomplete coursework)." },
+            { code: "I", desc: "Incomplete — Excluded from GPA. Student was unable to complete the course due to extenuating circumstances." },
+            { code: "W", desc: "Withdrawal — Excluded from GPA. Student officially withdrew from the course before the deadline." }
+          ]
         }
       }
     },
@@ -391,6 +415,30 @@ const translations = {
         retakeContent: {
           rule: "إذا حصل الطالب سابقاً على F أو FL في مقرر وأعاد امتحانه، الحد الأقصى للتقدير هو B+ (3.2).",
           enforced: "يُفرض هذا القاعدة في الحاسبة والمخطط."
+        },
+        gradeDefinitions: "تعريف التقديرات",
+        gradeDefinitionsContent: {
+          intro: "كل رمز تقدير في الجامعة المصرية الصينية له معنى محدد. إليك ما يمثله كل تقدير:",
+          grades: [
+            { code: "A+", desc: "ممتاز — 4.0 نقطة لكل ساعة معتمدة (96% فأكثر)" },
+            { code: "A", desc: "جيد جداً — 3.7 نقطة لكل ساعة معتمدة (92% – أقل من 96%)" },
+            { code: "A-", desc: "جيد جداً ناقص — 3.4 نقطة لكل ساعة معتمدة (88% – أقل من 92%)" },
+            { code: "B+", desc: "جيد — 3.2 نقطة لكل ساعة معتمدة (84% – أقل من 88%)" },
+            { code: "B", desc: "جيد ناقص — 3.0 نقطة لكل ساعة معتمدة (80% – أقل من 84%)" },
+            { code: "B-", desc: "فوق المتوسط — 2.8 نقطة لكل ساعة معتمدة (76% – أقل من 80%)" },
+            { code: "C+", desc: "متوسط — 2.6 نقطة لكل ساعة معتمدة (72% – أقل من 76%)" },
+            { code: "C", desc: "أقل من المتوسط — 2.4 نقطة لكل ساعة معتمدة (68% – أقل من 72%)" },
+            { code: "C-", desc: "مقبول — 2.2 نقطة لكل ساعة معتمدة (64% – أقل من 68%)" },
+            { code: "D+", desc: "نجاح هامشي — 2.0 نقطة لكل ساعة معتمدة (60% – أقل من 64%)" },
+            { code: "D", desc: "نجاح ضعيف — 1.5 نقطة لكل ساعة معتمدة (55% – أقل من 60%)" },
+            { code: "D-", desc: "نجاح الحد الأدنى — 1.0 نقطة لكل ساعة معتمدة (50% – أقل من 55%)" },
+            { code: "F", desc: "رسب — 0 نقاط لكن الساعات تُحسب في المعدل. حصل الطالب على أقل من 50% إجمالياً." },
+            { code: "FL", desc: "رسب (معمل/امتحان) — 0 نقاط، الساعات تُحسب في المعدل. حصل الطالب على 50%+ إجمالياً لكن أقل من 12/40 في الامتحان النهائى." },
+            { code: "ABS", desc: "غياب — 0 نقاط، الساعات تُحسب في المعدل. غاب الطالب عن الامتحان النهائى." },
+            { code: "CON", desc: "المقرر مستمر — مستثنى من المعدل. المقرر يستمر في الفصل القادم (أعمال ناقصة)." },
+            { code: "I", desc: "غير مكتمل — مستثنى من المعدل. لم يتمكن الطالب من إكمال المقرر بسبب ظروف استثنائية." },
+            { code: "W", desc: "انسحاب — مستثنى من المعدل. انسحب الطالب رسمياً من المقرر قبل الموعد النهائى." }
+          ]
         }
       }
     },

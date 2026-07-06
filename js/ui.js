@@ -982,6 +982,32 @@ function renderGuide() {
           <p style="color: var(--text-muted);">${p.retakeContent.enforced}</p>
         </div>
       </div>
+
+      <div class="accordion" onclick="toggleAccordion(this)">
+        <button class="accordion-header">
+          <span>${p.gradeDefinitions}</span>
+          <span class="accordion-icon">▼</span>
+        </button>
+        <div class="accordion-body">
+          <p style="margin-bottom: 12px;">${p.gradeDefinitionsContent.intro}</p>
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-color);">
+                <th style="padding: 8px; text-align: left; width: 60px;">${t('scale.grade')}</th>
+                <th style="padding: 8px; text-align: left;">${t('scale.meaning')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${p.gradeDefinitionsContent.grades.map(g => `
+                <tr style="border-bottom: 1px solid var(--border-color);">
+                  <td style="padding: 8px;"><span class="grade-badge ${getGradeBadgeClass(g.code)}">${g.code}</span></td>
+                  <td style="padding: 8px; color: var(--text-secondary);">${g.desc}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
   `;
 }
