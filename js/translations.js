@@ -89,7 +89,7 @@ const translations = {
       },
       validation: {
         noCourses: "Add at least one course to save",
-        excludeGrades: "Courses with CON, I, or W grades are excluded from GPA calculation"
+        excludeGrades: "Courses with CON, I, or W grades are excluded from GPA (0 points, hours ignored). F, FL, and ABS count hours with 0 points."
       }
     },
     planner: {
@@ -147,12 +147,12 @@ const translations = {
           note: "Both F and FL carry 0 points and both trigger the retake cap rule (max B+ on retake)."
         },
         gradingScale: "GPA Grading Scale",
-        gradingScaleContent: "The grading scale at ECU ranges from A+ (4.0 points) to F (0.0 points). Special grades like CON, I, and W are excluded from GPA calculation.",
+        gradingScaleContent: "The grading scale at ECU ranges from A+ (4.0 points) to D- (1.0 point). F, FL, and ABS award 0 points but their hours count in GPA. CON, I, and W are completely excluded from GPA.",
         howGpa: "How GPA is Calculated",
         howGpaContent: {
           semesterFormula: "Semester GPA = Σ (grade_points × credit_hours) / Σ (credit_hours)",
           cgpaFormula: "CGPA = Σ (all_grade_points × credit_hours) / Σ (all_counted_credit_hours)",
-          note: "Only courses with numeric point grades are included. CON, I, W, FL, and ABS are completely excluded from GPA. F counts its hours with 0 points. 0-credit-hour courses don't affect the calculation."
+          note: "Courses graded F, FL, or ABS award 0 points but their credit hours ARE counted in the denominator. Courses graded CON, I, or W are completely excluded (0 points, 0 hours). 0-credit-hour courses don't affect the calculation."
         },
         creditHours: "Credit Hours & Academic Levels",
         creditHoursContent: {
@@ -181,7 +181,7 @@ const translations = {
         },
         retakeRule: "Retake Rule",
         retakeContent: {
-          rule: "If a student previously received F or FL in a course and is retaking it, the maximum grade they can achieve is B+ (3.2).",
+          rule: "If a student previously received F or FL in a course and is retaking it, the maximum grade they can achieve is B+ (3.2). Additionally, the credit hours for that subject will not be added to the total attempted hours a second time — this prevents double-punishing the student for failing the same course twice.",
           enforced: "This rule is enforced in both the calculator and the planner."
         },
         gradeDefinitions: "Grade Definitions",
@@ -200,9 +200,9 @@ const translations = {
             { code: "D+", desc: "Marginal Pass — 2.0 points per credit hour (60% – less than 64%)" },
             { code: "D", desc: "Weak Pass — 1.5 points per credit hour (55% – less than 60%)" },
             { code: "D-", desc: "Minimum Pass — 1.0 points per credit hour (50% – less than 55%)" },
-            { code: "F", desc: "Failed — 0 points. Credit hours count in GPA. Student scored below 50% total." },
-            { code: "FL", desc: "Failed (Lab/Exam) — 0 points, excluded from GPA entirely. Student scored 50%+ total but got less than 12/40 on the final exam." },
-            { code: "ABS", desc: "Absent — 0 points, excluded from GPA entirely. Student was absent from the final exam." },
+            { code: "F", desc: "Failed — 0 points, but credit hours count in GPA. Student scored below 50% total." },
+            { code: "FL", desc: "Failed (Lab/Exam) — 0 points, but credit hours count in GPA. Student scored 50%+ total but got less than 12/40 on the final exam." },
+            { code: "ABS", desc: "Absent — 0 points, but credit hours count in GPA. Student was absent from the final exam." },
             { code: "CON", desc: "Course Continued — Excluded from GPA. The course continues into the next semester (incomplete coursework)." },
             { code: "I", desc: "Incomplete — Excluded from GPA. Student was unable to complete the course due to extenuating circumstances." },
             { code: "W", desc: "Withdrawal — Excluded from GPA. Student officially withdrew from the course before the deadline." }
@@ -321,7 +321,7 @@ const translations = {
       },
       validation: {
         noCourses: "أضف مقرراً واحداً على الأقل للحفظ",
-        excludeGrades: "المقررات بتقديرات CON أو I أو W غير محسوبة في المعدل"
+        excludeGrades: "المقررات بتقديرات CON أو I أو W مستبعدة من المعدل (0 نقاط، ساعات متجاهلة). F و FL و ABS تحسب الساعات مع 0 نقاط."
       }
     },
     planner: {
@@ -379,12 +379,12 @@ const translations = {
           note: "كلا F و FL يحملان 0 نقاط وكلاهما يُفعّل قاعدة إعادة الامتحان (أقصى تقدير B+)."
         },
         gradingScale: "جدول التقديرات",
-        gradingScaleContent: "يتراوح نظام التقييم في الجامعة المصرية الصينية من A+ (4.0 نقطة) إلى F (0.0 نقطة). التقديرات الخاصة مثل CON و I و W غير محسوبة في المعدل.",
+        gradingScaleContent: "يتراوح نظام التقييم في الجامعة المصرية الصينية من A+ (4.0 نقطة) إلى D- (1.0 نقطة). تقديرات F و FL و ABS تحمل 0 نقاط لكن ساعات المعتمدة تُحسب في المعدل. تقديرات CON و I و W مستبعدة تماماً من المعدل.",
         howGpa: "كيف يُحسب المعدل",
         howGpaContent: {
           semesterFormula: "معدل الفصل = Σ (نقاط التقدير × ساعات معتمدة) / Σ (ساعات معتمدة)",
           cgpaFormula: "المعدل التراكمي = Σ (جميع النقاط × ساعات معتمدة) / Σ (جميع الساعات المحسوبة)",
-          note: "تُحسب فقط المقررات ذات النقاط الرقمية. CON و I و W و FL و ABS مستبعدة تماماً من المعدل. F تُحسب ساعاتها مع 0 نقاط. مقررات 0 ساعات لا تؤثر على الحساب."
+          note: "مقررات F أو FL أو ABS تحمل 0 نقاط لكن ساعات المعتمدة تُحسب في المقام. مقررات CON أو I أو W مستبعدة تماماً (0 نقاط، 0 ساعات). مقررات 0 ساعات لا تؤثر على الحساب."
         },
         creditHours: "الساعات المعتمدة والمستويات الأكاديمية",
         creditHoursContent: {
@@ -413,7 +413,7 @@ const translations = {
         },
         retakeRule: "قاعدة إعادة الامتحان",
         retakeContent: {
-          rule: "إذا حصل الطالب سابقاً على F أو FL في مقرر وأعاد امتحانه، الحد الأقصى للتقدير هو B+ (3.2).",
+          rule: "إذا حصل الطالب سابقاً على F أو FL في مقرر وأعاد امتحانه، الحد الأقصى للتقدير هو B+ (3.2). بالإضافة إلى ذلك، لن تُضاف ساعات المعتمدة للمقرر في المعدل مرة ثانية — هذا لمنع معاقبة الطالب مرتين لنفس المقرر.",
           enforced: "يُفرض هذا القاعدة في الحاسبة والمخطط."
         },
         gradeDefinitions: "تعريف التقديرات",
@@ -433,8 +433,8 @@ const translations = {
             { code: "D", desc: "نجاح ضعيف — 1.5 نقطة لكل ساعة معتمدة (55% – أقل من 60%)" },
             { code: "D-", desc: "نجاح الحد الأدنى — 1.0 نقطة لكل ساعة معتمدة (50% – أقل من 55%)" },
             { code: "F", desc: "رسب — 0 نقاط لكن الساعات تُحسب في المعدل. حصل الطالب على أقل من 50% إجمالياً." },
-            { code: "FL", desc: "رسب (معمل/امتحان) — 0 نقاط، مستثنى من المعدل بالكامل. حصل الطالب على 50%+ لكن أقل من 12/40 في الامتحان النهائى." },
-            { code: "ABS", desc: "غياب — 0 نقاط، مستثنى من المعدل بالكامل. غاب الطالب عن الامتحان النهائى." },
+            { code: "FL", desc: "رسب (معمل/امتحان) — 0 نقاط لكن الساعات تُحسب في المعدل. حصل الطالب على 50%+ لكن أقل من 12/40 في الامتحان النهائى." },
+            { code: "ABS", desc: "غياب — 0 نقاط لكن الساعات تُحسب في المعدل. غاب الطالب عن الامتحان النهائى." },
             { code: "CON", desc: "المقرر مستمر — مستثنى من المعدل. المقرر يستمر في الفصل القادم (أعمال ناقصة)." },
             { code: "I", desc: "غير مكتمل — مستثنى من المعدل. لم يتمكن الطالب من إكمال المقرر بسبب ظروف استثنائية." },
             { code: "W", desc: "انسحاب — مستثنى من المعدل. انسحب الطالب رسمياً من المقرر قبل الموعد النهائى." }
