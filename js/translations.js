@@ -152,7 +152,7 @@ const translations = {
         howGpaContent: {
           semesterFormula: "Semester GPA = Σ (grade_points × credit_hours) / Σ (credit_hours)",
           cgpaFormula: "CGPA = Σ (all_grade_points × credit_hours) / Σ (all_counted_credit_hours)",
-          note: "Only courses with numeric point grades are included. CON, I, W are completely excluded. 0-credit-hour courses don't affect the calculation."
+          note: "Only courses with numeric point grades are included. CON, I, W, FL, and ABS are completely excluded from GPA. F counts its hours with 0 points. 0-credit-hour courses don't affect the calculation."
         },
         creditHours: "Credit Hours & Academic Levels",
         creditHoursContent: {
@@ -200,9 +200,9 @@ const translations = {
             { code: "D+", desc: "Marginal Pass — 2.0 points per credit hour (60% – less than 64%)" },
             { code: "D", desc: "Weak Pass — 1.5 points per credit hour (55% – less than 60%)" },
             { code: "D-", desc: "Minimum Pass — 1.0 points per credit hour (50% – less than 55%)" },
-            { code: "F", desc: "Failed — 0 points, but credit hours count in GPA. Student scored below 50% total." },
-            { code: "FL", desc: "Failed (Lab/Exam) — 0 points, credit hours count in GPA. Student scored 50%+ total but got less than 12/40 on the final exam." },
-            { code: "ABS", desc: "Absent — 0 points, credit hours count in GPA. Student was absent from the final exam." },
+            { code: "F", desc: "Failed — 0 points. Credit hours count in GPA. Student scored below 50% total." },
+            { code: "FL", desc: "Failed (Lab/Exam) — 0 points, excluded from GPA entirely. Student scored 50%+ total but got less than 12/40 on the final exam." },
+            { code: "ABS", desc: "Absent — 0 points, excluded from GPA entirely. Student was absent from the final exam." },
             { code: "CON", desc: "Course Continued — Excluded from GPA. The course continues into the next semester (incomplete coursework)." },
             { code: "I", desc: "Incomplete — Excluded from GPA. Student was unable to complete the course due to extenuating circumstances." },
             { code: "W", desc: "Withdrawal — Excluded from GPA. Student officially withdrew from the course before the deadline." }
@@ -384,7 +384,7 @@ const translations = {
         howGpaContent: {
           semesterFormula: "معدل الفصل = Σ (نقاط التقدير × ساعات معتمدة) / Σ (ساعات معتمدة)",
           cgpaFormula: "المعدل التراكمي = Σ (جميع النقاط × ساعات معتمدة) / Σ (جميع الساعات المحسوبة)",
-          note: "تُحسب فقط المقررات ذات النقاط الرقمية. CON و I و W مستبعدة تماماً. مقررات 0 ساعات لا تؤثر على الحساب."
+          note: "تُحسب فقط المقررات ذات النقاط الرقمية. CON و I و W و FL و ABS مستبعدة تماماً من المعدل. F تُحسب ساعاتها مع 0 نقاط. مقررات 0 ساعات لا تؤثر على الحساب."
         },
         creditHours: "الساعات المعتمدة والمستويات الأكاديمية",
         creditHoursContent: {
@@ -433,8 +433,8 @@ const translations = {
             { code: "D", desc: "نجاح ضعيف — 1.5 نقطة لكل ساعة معتمدة (55% – أقل من 60%)" },
             { code: "D-", desc: "نجاح الحد الأدنى — 1.0 نقطة لكل ساعة معتمدة (50% – أقل من 55%)" },
             { code: "F", desc: "رسب — 0 نقاط لكن الساعات تُحسب في المعدل. حصل الطالب على أقل من 50% إجمالياً." },
-            { code: "FL", desc: "رسب (معمل/امتحان) — 0 نقاط، الساعات تُحسب في المعدل. حصل الطالب على 50%+ إجمالياً لكن أقل من 12/40 في الامتحان النهائى." },
-            { code: "ABS", desc: "غياب — 0 نقاط، الساعات تُحسب في المعدل. غاب الطالب عن الامتحان النهائى." },
+            { code: "FL", desc: "رسب (معمل/امتحان) — 0 نقاط، مستثنى من المعدل بالكامل. حصل الطالب على 50%+ لكن أقل من 12/40 في الامتحان النهائى." },
+            { code: "ABS", desc: "غياب — 0 نقاط، مستثنى من المعدل بالكامل. غاب الطالب عن الامتحان النهائى." },
             { code: "CON", desc: "المقرر مستمر — مستثنى من المعدل. المقرر يستمر في الفصل القادم (أعمال ناقصة)." },
             { code: "I", desc: "غير مكتمل — مستثنى من المعدل. لم يتمكن الطالب من إكمال المقرر بسبب ظروف استثنائية." },
             { code: "W", desc: "انسحاب — مستثنى من المعدل. انسحب الطالب رسمياً من المقرر قبل الموعد النهائى." }
