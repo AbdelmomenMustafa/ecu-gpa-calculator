@@ -1,0 +1,80 @@
+[dir="rtl"] body {
+  font-family: var(--font-ar);
+}
+
+[dir="rtl"] .navbar {
+  direction: rtl;
+}
+
+[dir="rtl"] .nav-brand {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .nav-links {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .nav-right {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lang-toggle {
+  direction: ltr;
+}
+
+[dir="rtl"] .section-title {
+  text-align: right;
+}
+
+[dir="rtl"] .card-header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .course-row {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .course-row .course-fields {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .progress-bar-label {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .alert-icon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[dir="rtl"] .accordion-icon {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .accordion.open .accordion-icon {
+  transform: scaleX(-1) rotate(180deg);
+}
+
+[dir="rtl"] .toast {
+  left: 16px;
+  right: auto;
+}
+
+[dir="rtl"] .gauge-label {
+  direction: ltr;
+}
+
+[dir="rtl"] .grade-badge {
+  direction: ltr;
+}
+
+[dir="rtl"] input[type="text"],
+[dir="rtl"] input[type="number"],
+[dir="rtl"] select {
+  text-align: right;
+}
+
+[dir="rtl"] .nav-mobile-toggle {
+  margin-left: 0;
+  margin-right: auto;
+}
