@@ -179,6 +179,25 @@
   padding-left: 36px;
 }
 
+.form-select option,
+.form-select optgroup {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 8px 14px;
+}
+
+.form-select option:hover,
+.form-select option:checked {
+  background: var(--bg-surface-solid);
+  color: #ffffff;
+}
+
+.form-select option[value="F"],
+.form-select option[value="FL"],
+.form-select option[value="ABS"] {
+  color: var(--accent-danger);
+}
+
 .form-hint {
   font-size: 0.78rem;
   color: var(--text-muted);
