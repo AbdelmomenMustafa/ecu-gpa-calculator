@@ -106,7 +106,6 @@ function handleSetupSave() {
 function calculateBestCaseProjection(remainingHours) {
   const SEMESTER_MAX = 18;
   const SUMMER_MAX = 9;
-  const YEAR_MAX = SEMESTER_MAX * 2 + SUMMER_MAX;
 
   let semesters = 0;
   let summers = 0;
@@ -138,7 +137,6 @@ function renderDashboard(state) {
   const remaining = getRemainingHours(completedHours);
   const level = getAcademicLevel(completedHours);
   const limit = getSubjectLimit(s.currentCGPA);
-  const gpaCounted = getGPACountedHours(s.totalHoursCompleted, s.nonGPAHours);
   const progress = (s.totalHoursCompleted / TOTAL_REQUIRED_HOURS) * 100;
   const trackRemaining = Math.max(0, TRACK_ELIGIBLE_HOURS - completedHours);
   const isTrackElig = isTrackEligible(completedHours);
@@ -334,21 +332,20 @@ function renderSemesterCalculator(state) {
 
           <div class="card" style="margin-bottom: 20px;">
             <h3 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--text-secondary);">${currentLang === 'ar' ? 'معلوماتك الحالية' : 'Your Current Info'}</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end;">
               <div class="form-group" style="margin-bottom: 0;">
                 <label class="form-label">${currentLang === 'ar' ? 'المعدل التراكمي الحالي' : 'Current CGPA'}</label>
-                <input type="number" class="form-input" id="sem-cgpa" min="0" max="4" step="0.01" value="${semesterCGPA}"
-                  oninput="handleSemesterCGPAChange(this.value)">
+                <input type="number" class="form-input" id="sem-cgpa" min="0" max="4" step="0.01" value="${semesterCGPA}">
               </div>
               <div class="form-group" style="margin-bottom: 0;">
                 <label class="form-label">${currentLang === 'ar' ? 'الساعات المكتملة' : 'Hours Completed'}</label>
-                <input type="number" class="form-input" id="sem-hours" min="0" max="138" value="${semesterHours}"
-                  oninput="handleSemesterHoursChange(this.value)">
+                <input type="number" class="form-input" id="sem-hours" min="0" max="138" value="${semesterHours}">
               </div>
+              <button class="btn btn-primary" onclick="handleSemesterCalculate()" style="height: 42px; margin-bottom: 1px;">${currentLang === 'ar' ? 'احسب' : 'Calculate'}</button>
             </div>
           </div>
 
-          <div class="alert alert-info" style="margin-bottom: 16px;">
+          <div id="semester-limit-alert" class="alert alert-info" style="margin-bottom: 16px;">
             <span class="alert-icon">📋</span>
             ${currentLang === 'ar'
               ? `بمعدلك التراكمي ${formatGPA(semesterCGPA)}، يمكنك التسجيل في ${effectiveLimit} مقررات كحد أقصى`
@@ -369,7 +366,7 @@ function renderSemesterCalculator(state) {
 
           <div style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
             <button class="btn btn-secondary" id="add-course-btn" onclick="addSemesterCourse()" ${semesterCourses.length >= effectiveLimit ? 'disabled' : ''}>+ ${t('semester.addCourse')}</button>
-            ${semesterCourses.length >= effectiveLimit ? `<span style="color: var(--text-muted); font-size: 0.85rem; align-self: center;">${currentLang === 'ar' ? `وصلت للحد الأقصى ${effectiveLimit} مقررات` : `Reached the limit of ${effectiveLimit} subjects`}</span>` : ''}
+            <span id="semester-limit-msg" style="color: var(--text-muted); font-size: 0.85rem; align-self: center;"></span>
           </div>
 
           <div style="margin-top: 24px;">
@@ -385,13 +382,38 @@ function renderSemesterCalculator(state) {
   updateSemesterPreview();
 }
 
-function handleSemesterCGPAChange(val) {
-  semesterCGPA = parseFloat(val) || 0;
-  renderSemesterCalculator(AppState);
-}
+function handleSemesterCalculate() {
+  const cgpaInput = document.getElementById('sem-cgpa');
+  const hoursInput = document.getElementById('sem-hours');
+  semesterCGPA = parseFloat(cgpaInput.value) || 0;
+  semesterHours = parseInt(hoursInput.value) || 0;
 
-function handleSemesterHoursChange(val) {
-  semesterHours = parseInt(val) || 0;
+  const baseLimit = getSubjectLimit(semesterCGPA);
+  const effectiveLimit = hasExtraSubjectApproval ? baseLimit + 1 : baseLimit;
+
+  const alertEl = document.getElementById('semester-limit-alert');
+  if (alertEl) {
+    alertEl.innerHTML = `
+      <span class="alert-icon">📋</span>
+      ${currentLang === 'ar'
+        ? `بمعدلك التراكمي ${formatGPA(semesterCGPA)}، يمكنك التسجيل في ${effectiveLimit} مقررات كحد أقصى`
+        : `Based on your CGPA of ${formatGPA(semesterCGPA)}, you can register up to ${effectiveLimit} subjects`}
+      ${hasExtraSubjectApproval ? ` <span style="color: var(--accent-success);">(${currentLang === 'ar' ? '+1 بوية' : '+1 approved'})</span>` : ''}
+    `;
+  }
+
+  const addBtn = document.getElementById('add-course-btn');
+  const limitMsg = document.getElementById('semester-limit-msg');
+  if (addBtn) {
+    addBtn.disabled = semesterCourses.length >= effectiveLimit;
+  }
+  if (limitMsg) {
+    limitMsg.textContent = semesterCourses.length >= effectiveLimit
+      ? (currentLang === 'ar' ? `وصلت للحد الأقصى ${effectiveLimit} مقررات` : `Reached the limit of ${effectiveLimit} subjects`)
+      : '';
+  }
+
+  renderSemesterCourses();
   updateSemesterPreview();
 }
 
@@ -434,7 +456,10 @@ function updateCourse(index, field, value, isPlanner) {
     courses[index].isLocked = true;
     recalculatePlanner();
   }
-  if (!isPlanner) updateSemesterPreview();
+  if (!isPlanner) {
+    renderSemesterCourses();
+    updateSemesterPreview();
+  }
 }
 
 function toggleRetake(index, checked, isPlanner) {
@@ -482,10 +507,16 @@ function renderSemesterCourses() {
     el.innerHTML = semesterCourses.map((c, i) => renderCourseRow(c, i, false)).join('');
   }
   const addBtn = document.getElementById('add-course-btn');
+  const limitMsg = document.getElementById('semester-limit-msg');
+  const baseLimit = getSubjectLimit(semesterCGPA);
+  const effectiveLimit = hasExtraSubjectApproval ? baseLimit + 1 : baseLimit;
   if (addBtn) {
-    const baseLimit = getSubjectLimit(semesterCGPA);
-    const effectiveLimit = hasExtraSubjectApproval ? baseLimit + 1 : baseLimit;
     addBtn.disabled = semesterCourses.length >= effectiveLimit;
+  }
+  if (limitMsg) {
+    limitMsg.textContent = semesterCourses.length >= effectiveLimit
+      ? (currentLang === 'ar' ? `وصلت للحد الأقصى ${effectiveLimit} مقررات` : `Reached the limit of ${effectiveLimit} subjects`)
+      : '';
   }
 }
 
